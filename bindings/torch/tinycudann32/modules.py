@@ -9,7 +9,7 @@
 import gc
 import torch
 from torch.autograd.function import once_differentiable
-from tinycudann_bindings import _C
+from tinycudann32_bindings import _C
 
 def _torch_precision(tcnn_precision):
 	if tcnn_precision == _C.Precision.Fp16:

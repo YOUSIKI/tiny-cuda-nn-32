@@ -15,7 +15,7 @@ with open(os.path.join(ROOT_DIR, "CMakeLists.txt"), "r") as cmakelists:
 			VERSION = line.split("VERSION")[-1].strip()
 			break
 
-print(f"Building PyTorch extension for tiny-cuda-nn version {VERSION}")
+print(f"Building PyTorch extension for tiny-cuda-nn-32 version {VERSION}")
 
 ext_modules = []
 
@@ -87,7 +87,7 @@ os.environ["TORCH_CUDA_ARCH_LIST"] = ""
 bindings_dir = os.path.dirname(__file__)
 root_dir = os.path.abspath(os.path.join(bindings_dir, "../.."))
 source_files = [
-	"tinycudann/bindings.cpp",
+	"tinycudann32/bindings.cpp",
 	"../../dependencies/fmt/src/format.cc",
 	"../../dependencies/fmt/src/os.cc",
 	"../../src/cpp_api.cu",
@@ -109,7 +109,7 @@ else:
 	cflags.append("-DTCNN_NO_NETWORKS")
 
 ext = CUDAExtension(
-	name="tinycudann_bindings._C",
+	name="tinycudann32_bindings._C",
 	sources=source_files,
 	include_dirs=[
 		"%s/include" % root_dir,
@@ -124,7 +124,7 @@ ext = CUDAExtension(
 ext_modules = [ext]
 
 setup(
-	name="tinycudann",
+	name="tinycudann32",
 	version=VERSION,
 	description="tiny-cuda-nn extension for PyTorch",
 	long_description="tiny-cuda-nn extension for PyTorch",
@@ -147,7 +147,7 @@ setup(
 	maintainer_email="tmueller@nvidia.com",
 	download_url=f"https://github.com/nvlabs/tiny-cuda-nn",
 	license="BSD 3-Clause \"New\" or \"Revised\" License",
-	packages=["tinycudann"],
+	packages=["tinycudann32"],
 	install_requires=[],
 	include_package_data=True,
 	zip_safe=False,

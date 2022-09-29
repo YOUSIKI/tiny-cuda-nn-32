@@ -302,7 +302,7 @@ Module create_encoding(uint32_t n_input_dims, const nlohmann::json& encoding, tc
 }
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-	py::enum_<tcnn::cpp::EPrecision>(m, "Precision")
+	py::enum_<tcnn::cpp::EPrecision>(m, "Precision", py::module_local())
 		.value("Fp32", tcnn::cpp::EPrecision::Fp32)
 		.value("Fp16", tcnn::cpp::EPrecision::Fp16)
 		.export_values()
@@ -315,14 +315,14 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 	// Encapsulates an abstract context of an operation
 	// (commonly the forward pass) to be passed on to other
 	// operations (commonly the backward pass).
-	py::class_<tcnn::cpp::Context>(m, "Context");
+	py::class_<tcnn::cpp::Context>(m, "Context", py::module_local());
 
 	// The python bindings expose TCNN's C++ API through
 	// a single "Module" class that can act as the encoding,
 	// the neural network, or a combined encoding + network
 	// under the hood. The bindings don't need to concern
 	// themselves with these implementation details, though.
-	py::class_<Module>(m, "Module")
+	py::class_<Module>(m, "Module", py::module_local())
 		.def("fwd", &Module::fwd)
 		.def("bwd", &Module::bwd)
 		.def("bwd_bwd_input", &Module::bwd_bwd_input)
